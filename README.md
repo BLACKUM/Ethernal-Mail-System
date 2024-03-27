@@ -1,2 +1,3 @@
-# Ethernal Mail System
- none
+# Internal Mail System(блекум чурка)
+ SMTP email service for internal local network
+ 
