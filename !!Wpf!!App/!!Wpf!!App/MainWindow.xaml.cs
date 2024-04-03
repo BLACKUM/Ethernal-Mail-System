@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace __Wpf__App
 {
-    
+
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
@@ -30,24 +30,24 @@ namespace __Wpf__App
             string connectionString = "Data Source=yourServer;Initial Catalog=yourDatabase;Integrated Security=True";
             _emailService = new EmailService(connectionString);
 
-            // Set up a timer to poll for new messages every 5 seconds
-            _pollTimer = new System.Threading.Timer(_emailService.PollForNewMessagesCallback, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            // Таймер для пула сообщений каждые 5 сек
+            _pollTimer = new System.Threading.Timer(PollForNewMessagesCallback, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
         }
         private void PollForNewMessagesCallback(object state)
         {
-            int userId = 1; // Replace with the actual user ID
+            int userId = 1; //Нужно брать из настоящий айдишник 
 
             List<Email> newMessages = _emailService.PollForNewMessages(userId);
 
-            // Update the UI with the new messages
+            // Тут закидываем сообщения на форму
             Dispatcher.Invoke(() =>
             {
                 foreach (Email email in newMessages)
                 {
-                    // Add the email to the inbox UI control or display a notification
                     // ...
                 }
             });
 
         }
     }
+}
