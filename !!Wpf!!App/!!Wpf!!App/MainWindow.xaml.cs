@@ -1,53 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace __Wpf__App
 {
-
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private EmailService _emailService;
-        private System.Threading.Timer _pollTimer;
+        private readonly EmailService _emailService;
+        private const int UserId = 1; // Replace with the actual user ID
 
         public MainWindow()
         {
             InitializeComponent();
-            string connectionString = "Data Source=yourServer;Initial Catalog=yourDatabase;Integrated Security=True";
+
+            // Initialize the EmailService with the database connection string
+            string connectionString = "Data Source=notebook-server\\sqlexpress;Initial Catalog=DBForMail;User=ADMAIL;Password=Fgadu!i2u0120i93udasj!";
             _emailService = new EmailService(connectionString);
-
-            // Таймер для пула сообщений каждые 5 сек
-            _pollTimer = new System.Threading.Timer(PollForNewMessagesCallback, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
         }
-        private void PollForNewMessagesCallback(object state)
+
+        private void SendEmailButton_Click(object sender, RoutedEventArgs e)
         {
-            int userId = 1; //Нужно брать из настоящий айдишник 
-
-            List<Email> newMessages = _emailService.PollForNewMessages(userId);
-
-            // Тут закидываем сообщения на форму
-            Dispatcher.Invoke(() =>
+            Email newEmail = new Email
             {
+                sender_id = UserId,
+                recipient_id = 2, // Replace with the actual recipient ID
+                subject = "Test Email",
+                body = "This is a test email message."
+            };
+
+            _emailService.SendMessage(newEmail);
+            OutputTextBlock.Text += "Email sent successfully.\n";
+        }
+
+        private void CheckNewEmailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Email> newMessages = _emailService.PollForNewMessages(UserId);
+
+            if (newMessages.Count > 0)
+            {
+                OutputTextBlock.Text += $"Received {newMessages.Count} new emails:\n";
                 foreach (Email email in newMessages)
                 {
-                    // ...
+                    OutputTextBlock.Text += $"From: {email.sender_id}, Subject: {email.subject}\n";
+                    OutputTextBlock.Text += $"{email.body}\n";
+                    OutputTextBlock.Text += $"Sent at: {email.send_time}\n\n";
                 }
-            });
-
+            }
+            else
+            {
+                OutputTextBlock.Text += "No new emails.\n";
+            }
         }
     }
 }
