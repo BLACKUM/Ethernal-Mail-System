@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--Черная тема-->
+    <Color x:Key="PrimeColor1">#1f1e1e</Color> <!--Background-->
+    <Color x:Key="PrimeColor2">#56006b</Color> <!--Кнопки, Обводка-->
+    <Color x:Key="PrimeColor3">White</Color> <!--Текст, разделитель, закрыть и свернуть-->
+    <!--Белая тема-->
+    <Color x:Key="SecColor1">White</Color>
+    <Color x:Key="SecColor2">#7fd8bd</Color>
+    <Color x:Key="SecColor3">Black</Color>
+    <!--Черная тема-->
+    <SolidColorBrush x:Key="Color1">#1f1e1e</SolidColorBrush>
+    <SolidColorBrush x:Key="Color2">#56006b</SolidColorBrush>
+    <SolidColorBrush x:Key="Color3">White</SolidColorBrush>
+    <SolidColorBrush x:Key="Color4">#FF1450A0</SolidColorBrush>
+    <SolidColorBrush x:Key="Color5">#FF673AB7</SolidColorBrush>
+    <!--Белая тема-->
+    <SolidColorBrush x:Key="SeconColor1">White</SolidColorBrush>
+    <SolidColorBrush x:Key="SeconColor2">#7fd8bd</SolidColorBrush>
+    <SolidColorBrush x:Key="SeconColor3">Black</SolidColorBrush>
+</ResourceDictionary>
