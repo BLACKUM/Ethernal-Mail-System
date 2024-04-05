@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:__Wpf__App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Corporate Email App" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <Button x:Name="SendEmailButton" Content="Send Email" Click="SendEmailButton_Click" Margin="5" />
+            <Button x:Name="CheckNewEmailsButton" Content="Check New Emails" Click="CheckNewEmailsButton_Click" Margin="5" />
+        </StackPanel>
+
+        <TextBlock x:Name="OutputTextBlock" Grid.Row="1" Margin="10" TextWrapping="Wrap" VerticalAlignment="Top" />
     </Grid>
 </Window>
