@@ -91,4 +91,27 @@ public class EmailService
 
         return newMessages;
     }
+
+    public List<string> GetAllUsernames()
+    {
+        List<string> usernames = new List<string>();
+
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string query = "SELECT user_name FROM Users";
+            SqlCommand command= new SqlCommand(query, connection);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string username = reader["user_name"].ToString();
+                    usernames.Add(username);
+                }
+            }
+        }
+        return usernames;
+    }
 }

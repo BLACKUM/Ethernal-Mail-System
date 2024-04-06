@@ -13,6 +13,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <ComboBox x:Name="UsernameCombobox" Margin="10"/>
             <Button x:Name="SendEmailButton" Content="Send Email" Click="SendEmailButton_Click" Margin="5" />
             <Button x:Name="CheckNewEmailsButton" Content="Check New Emails" Click="CheckNewEmailsButton_Click" Margin="5" />
         </StackPanel>

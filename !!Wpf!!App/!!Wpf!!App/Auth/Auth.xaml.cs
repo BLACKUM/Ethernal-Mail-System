@@ -115,9 +115,9 @@ namespace __Wpf__App.Auth
 
         private void kostil_Click(object sender, RoutedEventArgs e)
         {
-            /* var PrepodRaspisanie = new PrepodRaspisanie();
-            PrepodRaspisanie.Show();
-            this.Hide(); */
+            MainWindow mw = new MainWindow();
+            mw.Show();
+            this.Hide();
         }
 
         private void kostil2_Click(object sender, RoutedEventArgs e)

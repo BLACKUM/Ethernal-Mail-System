@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Windows;
 
 namespace __Wpf__App
@@ -11,10 +12,17 @@ namespace __Wpf__App
         public MainWindow()
         {
             InitializeComponent();
+            string connectionString = "Data Source=notebook-server\\sqlexpress;Initial Catalog=DBForMail;User=ADMAIL;Password=Fgadu!i2u0120i93udasj!";
+           
 
             // Initialize the EmailService with the database connection string
-            string connectionString = "Data Source=notebook-server\\sqlexpress;Initial Catalog=DBForMail;User=ADMAIL;Password=Fgadu!i2u0120i93udasj!";
             _emailService = new EmailService(connectionString);
+
+            List<string> usernames = _emailService.GetAllUsernames();
+
+            UsernameCombobox.ItemsSource= usernames;
+            UsernameCombobox.SelectedIndex=0;
+
         }
 
         private void SendEmailButton_Click(object sender, RoutedEventArgs e)
@@ -22,7 +30,7 @@ namespace __Wpf__App
             Email newEmail = new Email
             {
                 sender_id = UserId,
-                recipient_id = 2, // Replace with the actual recipient ID
+                recipient_id = 1, // Replace with the actual recipient ID
                 subject = "Test Email",
                 body = "This is a test email message."
             };
