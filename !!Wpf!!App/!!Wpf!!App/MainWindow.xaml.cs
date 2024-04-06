@@ -72,9 +72,24 @@ namespace __Wpf__App
         public void UpdateDataGridWithNewMessages()
         {
             List<Email> newMessages = _emailService.PollForNewMessages(UserId);
-
+            //sender_id
             messageDataGrid.ItemsSource = newMessages;
         }
-
+        /* 
+        private async Task LoadDataRaspisanie()
+        {
+            var КурсыIds = await dbEnt.Пользователи_Курсы.ToListAsync();
+            var расписание = await dbEnt.Расписание.ToListAsync();
+            var назвКурса = await dbEnt.Курсы.ToListAsync();
+            Dispatcher.Invoke(() =>
+            {
+            NameKursRaspisanie.ItemsSource = назвКурса;
+            NameKursRaspisanie.DisplayMemberPath = "Название";
+            NameKursRaspisanie.SelectedValuePath = "ID_Курса";
+            расписаниеDataGridRaspisanie.ItemsSource = расписание;
+            originalListRaspisanie = расписание;
+            });
+            }
+        */
     }
 }

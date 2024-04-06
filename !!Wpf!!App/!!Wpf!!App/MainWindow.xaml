@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:__Wpf__App"
         mc:Ignorable="d"
-        Title="Corporate Email App" Height="450" Width="800">
+        Title="Corporate Email App" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -19,7 +19,7 @@
         </StackPanel>
 
         <TextBlock x:Name="OutputTextBlock" Grid.Row="1" Margin="10" TextWrapping="Wrap" VerticalAlignment="Top" />
-        <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="0,103,0,0" Grid.Row="1">
+        <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="0,67,0,0" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Отправитель" Binding="{Binding sender_id}" Width="*"/>
                 <DataGridTextColumn Header="Тема" Binding="{Binding subject}" Width="*"/>
