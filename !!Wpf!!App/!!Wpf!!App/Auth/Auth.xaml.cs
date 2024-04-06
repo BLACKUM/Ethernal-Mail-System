@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -25,84 +26,74 @@ namespace __Wpf__App.Auth
         public Auth()
         {
             InitializeComponent();
+            Application.Current.MainWindow.ForceCursor = true;
+            Cursor = Cursors.AppStarting;
+            Loaded += (s, e) =>
+            {
+                Application.Current.MainWindow.ForceCursor = false;
+                Cursor = Cursors.Arrow;
+            };
         }
-
+        private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
         private void Collapse_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
-
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
             var LoginUser = loginBox.Text;
             var PasswordUser = passBox.Password;
-
-            // Объявление и инициализация переменной openConnection
-            SqlConnection openConnection = new SqlConnection(@"Data Source=Notebook-Server\SQLEXPRESS;Initial Catalog=TODO;Persist Security Info=True;User ID=ADMAIL;Password=Fgadu!i2u0120i93udasj!");
-            openConnection.Open();
-
-            if (LoginUser.Length >= 5 && PasswordUser.Length >= 5)
+            if (LoginUser.Length < 5 || PasswordUser.Length < 5)
             {
-                // Проверка наличия пользователя в базе данных
-                string query = "SELECT COUNT(*) FROM Регистрация WHERE Логин = @login";
-                SqlCommand command = new SqlCommand(query);
-                command.Parameters.AddWithValue("@login", LoginUser);
-
-                // Установка свойства Connection
-                command.Connection = openConnection;
-
-                int count = Convert.ToInt32(command.ExecuteScalar());
-
-                if (count == 0)
-                {
-                    // Ошибка авторизации
-                    string text = "Пользователь с таким логином не найден.";
-                    Text.Content = text;
-                    return;
-                }
-
-                // Проверка логина и пароля в базе данных
-                query = "SELECT Уровень_доступа FROM Регистрация WHERE Логин = @login AND Пароль = @password";
-                command = new SqlCommand(query);
-                command.Parameters.AddWithValue("@login", LoginUser);
-                command.Parameters.AddWithValue("@password", PasswordUser);
-
-                // Установка свойства Connection
-                command.Connection = openConnection;
-
-                string accessLevel = command.ExecuteScalar()?.ToString();
-
-                if (accessLevel == "1")
-                {
-                    // хз
-                }
-                else if (accessLevel == "2")
-                {
-                    // хз
-                }
-                else
-                {
-                    // Ошибка авторизации
-                    string text = "Не верный логин или пароль.";
-                    Text.Content = text;
-                }
-
-            }
-            else
-            {
-                // Ошибка авторизации
                 string text = "Логин и пароль должны содержать не менее 5 символов.";
                 Text.Content = text;
+                return;
             }
-
-            // Закрытие соединения с базой данных
-            openConnection.Close();
+            DataBase db = new DataBase();
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                db.openConnection();
+                string query = "SELECT COUNT(*) FROM Users WHERE Логин = @user_name";
+                SqlCommand command = new SqlCommand(query, db.getConnection());
+                command.Parameters.AddWithValue("@user_name", LoginUser);
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                if (count == 0)
+                {
+                    string text = "Пользователь с таким логином не найден.";
+                    Text.Content = text;
+                    db.closeConnection();
+                    return;
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Ошибка подключения к базе данных: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Произошла ошибка: " + ex.Message);
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+                if (db.getConnection().State == ConnectionState.Open)
+                {
+                    db.closeConnection();
+                }
+            }
         }
         private void Reg_Click(object sender, RoutedEventArgs e)
         {
-            /* var registration = new Registration();
+            var registration = new Reg();
             registration.Show();
-            this.Hide(); */
+            this.Hide();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -111,20 +102,6 @@ namespace __Wpf__App.Auth
             {
                 System.Windows.Application.Current.Shutdown();
             }
-        }
-
-        private void kostil_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mw = new MainWindow();
-            mw.Show();
-            this.Hide();
-        }
-
-        private void kostil2_Click(object sender, RoutedEventArgs e)
-        {
-            /* var PrepodKursi = new PrepodKursi();
-            PrepodKursi.Show();
-            this.Hide(); */
         }
     }
 }

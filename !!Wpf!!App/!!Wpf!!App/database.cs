@@ -32,6 +32,12 @@ namespace __Wpf__App
         {
             return sqlConnection;
         }
-
+        public async Task openConnectionAsync()
+        {
+            if (sqlConnection.State == System.Data.ConnectionState.Closed)
+            {
+                await sqlConnection.OpenAsync();
+            }
+        }
     }
 }
