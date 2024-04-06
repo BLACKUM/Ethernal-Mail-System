@@ -49,14 +49,14 @@ namespace __Wpf__App.Auth
             try
             {
                 await db.openConnectionAsync();
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Регистрация WHERE Логин = @Логин", db.getConnection());
-                command.Parameters.AddWithValue("@Логин", login);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Users WHERE user_name = @user_name", db.getConnection());
+                command.Parameters.AddWithValue("@user_name", login);
                 int count = Convert.ToInt32(await command.ExecuteScalarAsync());
                 if (count == 0)
                 {
-                    command = new SqlCommand("INSERT INTO Регистрация (Логин, Пароль) VALUES (@Логин, @Пароль)", db.getConnection());
-                    command.Parameters.AddWithValue("@Логин", login);
-                    command.Parameters.AddWithValue("@Пароль", password);
+                    command = new SqlCommand("INSERT INTO Users (user_name, user_password) VALUES (@user_name, @user_password)", db.getConnection());
+                    command.Parameters.AddWithValue("@user_name", login);
+                    command.Parameters.AddWithValue("@user_password", password);
                     await command.ExecuteNonQueryAsync();
                     var authorization = new Auth();
                     authorization.Show();

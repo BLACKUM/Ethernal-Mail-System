@@ -60,7 +60,7 @@ namespace __Wpf__App.Auth
             try
             {
                 db.openConnection();
-                string query = "SELECT COUNT(*) FROM Users WHERE Логин = @user_name";
+                string query = "SELECT COUNT(*) FROM Users WHERE user_name = @user_name";
                 SqlCommand command = new SqlCommand(query, db.getConnection());
                 command.Parameters.AddWithValue("@user_name", LoginUser);
                 int count = Convert.ToInt32(command.ExecuteScalar());
@@ -85,6 +85,9 @@ namespace __Wpf__App.Auth
                 Mouse.OverrideCursor = null;
                 if (db.getConnection().State == ConnectionState.Open)
                 {
+                    var MainWindow = new MainWindow();
+                    MainWindow.Show();
+                    this.Hide();
                     db.closeConnection();
                 }
             }

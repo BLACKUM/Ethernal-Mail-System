@@ -9,7 +9,7 @@ namespace __Wpf__App
 {
     internal class DataBase
     {
-        SqlConnection sqlConnection = new SqlConnection(@"Data Source=Notebook-Server\SQLEXPRESS;Initial Catalog=TODO;Persist Security Info=True;User ID=ADMAIL;Password=Fgadu!i2u0120i93udasj!");
+        SqlConnection sqlConnection = new SqlConnection(@"Data Source=Notebook-Server\SQLEXPRESS;Initial Catalog=DBForMail;Persist Security Info=True;User ID=ADMAIL;Password=Fgadu!i2u0120i93udasj!");
 
 
         public void openConnection()
