@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows;
-
+using System.Windows.Threading;
 namespace __Wpf__App
 {
     public partial class MainWindow : Window
@@ -14,6 +15,10 @@ namespace __Wpf__App
             InitializeComponent();
             string connectionString = "Data Source=notebook-server\\sqlexpress;Initial Catalog=DBForMail;User=ADMAIL;Password=Fgadu!i2u0120i93udasj!";
            
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(5);
+            timer.Tick += Timer_Tick;
+            timer.Start();
 
             // Initialize the EmailService with the database connection string
             _emailService = new EmailService(connectionString);
@@ -23,6 +28,11 @@ namespace __Wpf__App
             UsernameCombobox.ItemsSource= usernames;
             UsernameCombobox.SelectedIndex=0;
 
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            UpdateDataGridWithNewMessages();
         }
 
         private void SendEmailButton_Click(object sender, RoutedEventArgs e)
@@ -58,5 +68,13 @@ namespace __Wpf__App
                 OutputTextBlock.Text += "No new emails.\n";
             }
         }
+
+        public void UpdateDataGridWithNewMessages()
+        {
+            List<Email> newMessages = _emailService.PollForNewMessages(UserId);
+
+            messageDataGrid.ItemsSource = newMessages;
+        }
+
     }
 }

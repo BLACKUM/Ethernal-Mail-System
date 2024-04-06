@@ -19,5 +19,14 @@
         </StackPanel>
 
         <TextBlock x:Name="OutputTextBlock" Grid.Row="1" Margin="10" TextWrapping="Wrap" VerticalAlignment="Top" />
+        <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="0,103,0,0" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Отправитель" Binding="{Binding sender_id}" Width="*"/>
+                <DataGridTextColumn Header="Тема" Binding="{Binding subject}" Width="*"/>
+                <DataGridTextColumn Header="Сообщение" Binding="{Binding body}" Width="*"/>
+                <DataGridTextColumn Header="Время отправки" Binding="{Binding send_time}" Width="*"/>
+                <DataGridTextColumn Header="Прочитано" Binding="{Binding read_status}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
