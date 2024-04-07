@@ -166,7 +166,20 @@ public class EmailService
 
         return lastCheckTime;
     }
+    public void SetLastCheckTimeForUser(int userId, DateTime lastCheckTime)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            //string insertQuery = "INSERT INTO Messages (sender_id, recipient_id, subject, body, send_time, read_status) VALUES (@SenderID, @RecipientID, @Subject, @Body, @SentTime, @ReadStatus)";
 
+            connection.Open();
+            string setQuery = "INSERT INTO Users_Last_Check_Time (user_id, last_check_time) VALUES (@UserId, @LastCheckTime)";
+            SqlCommand command = new SqlCommand(setQuery, connection);
+            command.Parameters.AddWithValue("@LastCheckTime", lastCheckTime);
+            command.Parameters.AddWithValue("@UserId", userId);
+            command.ExecuteNonQuery();
+        }
+    }
     public void UpdateLastCheckTimeForUser(int userId, DateTime lastCheckTime)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))

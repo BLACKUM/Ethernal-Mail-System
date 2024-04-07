@@ -13,6 +13,7 @@ namespace __Wpf__App
     public partial class MainWindow : Window
     {
         DataBase database = new DataBase();
+        private MessageCheckerThread _messageCheckerThread;
         public int userIdBack;
         private readonly EmailService _emailService;
         public MainWindow(int userId)
@@ -23,6 +24,10 @@ namespace __Wpf__App
             // Initialize the EmailService with the database connection string
             _emailService = new EmailService(connectionString);
 
+            DateTime currentTime = DateTime.Now;
+            DateTime modifiedTime = currentTime.AddSeconds(-1);
+            _emailService.SetLastCheckTimeForUser(userId, modifiedTime);
+
             _emailService.NewMessageReceived += EmailService_NewMessageReceived;
 
             List<string> usernames = _emailService.GetAllUsernames();
@@ -30,6 +35,8 @@ namespace __Wpf__App
             UsernameCombobox.ItemsSource = usernames;
             UsernameCombobox.SelectedIndex = 0;
 
+            _messageCheckerThread = new MessageCheckerThread(_emailService, userId, TimeSpan.FromSeconds(1));
+            _messageCheckerThread.Start();
 
             DataBase db = new DataBase();
             userIdBack = userId;
@@ -88,6 +95,15 @@ namespace __Wpf__App
             }
             CheckNewMessages();
             FetchAndPopulateMessages(userId);
+            
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            // Dispose of the MessageCheckerThread
+            _messageCheckerThread.Dispose();
         }
 
         private void EmailService_NewMessageReceived(object sender, EmailEventArgs e)
