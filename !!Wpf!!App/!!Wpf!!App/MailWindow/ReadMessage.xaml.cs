@@ -19,10 +19,23 @@ namespace __Wpf__App.MailWindow
     /// </summary>
     public partial class ReadMessage : Window
     {
-        public ReadMessage(List<Email> newMessages)
+        private Email _selectedEmail;
+
+        public ReadMessage(Email email)
         {
             InitializeComponent();
+            _selectedEmail = email;
+            DisplayMessage();
         }
+
+        private void DisplayMessage()
+        {
+            SenderLabel.Content = $"Отправитель: {_selectedEmail.sender_name}";
+            SubjectLabel.Content = $"Тема: {_selectedEmail.subject}";
+            BodyTextBox.Text = _selectedEmail.body;
+            DateLabel.Content= $"Дата: {_selectedEmail.send_time}";
+        }
+
         private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)

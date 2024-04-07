@@ -109,11 +109,14 @@ namespace __Wpf__App
 
         private void OnMessageSelected(object sender, RoutedEventArgs e)
         {
-            List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
-            var ReadMessage = new ReadMessage(newMessages);
-            ReadMessage.Show();
-            this.Hide();
+            if (messageDataGrid.SelectedItem != null && messageDataGrid.SelectedItem is Email selectedEmail)
+            {
+                var readMessage = new ReadMessage(selectedEmail);
+                readMessage.Show();
+                this.Hide();
+            }
         }
+
 
         private void Reload_Click(object sender, RoutedEventArgs e)
         {
