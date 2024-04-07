@@ -15,13 +15,12 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
             <ComboBox x:Name="UsernameCombobox" Margin="10"/>
             <Button x:Name="SendEmailButton" Content="Send Email" Click="SendEmailButton_Click" Margin="5" />
-            <Button x:Name="CheckNewEmailsButton" Content="Check New Emails" Click="CheckNewEmailsButton_Click" Margin="5" />
         </StackPanel>
 
         <TextBlock x:Name="OutputTextBlock" Grid.Row="1" Margin="10" TextWrapping="Wrap" VerticalAlignment="Top" />
         <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="0,67,0,0" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Отправитель" Binding="{Binding sender_id}" Width="*"/>
+                <DataGridTextColumn Header="Отправитель" Binding="{Binding sender_name}" Width="*"/>
                 <DataGridTextColumn Header="Тема" Binding="{Binding subject}" Width="*"/>
                 <DataGridTextColumn Header="Сообщение" Binding="{Binding body}" Width="*"/>
                 <DataGridTextColumn Header="Время отправки" Binding="{Binding send_time}" Width="*"/>

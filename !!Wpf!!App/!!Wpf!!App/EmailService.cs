@@ -6,6 +6,7 @@ public class Email
 {
     public int message_id { get; set; }
     public int sender_id { get; set; }
+    public string sender_name { get; set; }
     public int recipient_id { get; set; }
     public string subject { get; set; }
     public string body { get; set; }
@@ -42,27 +43,23 @@ public class EmailService
         }
     }
 
-    public List<Email> PollForNewMessages(int userId)
+    public List<Email> GetAllMessagesForUser(int userId)
     {
-        List<Email> newMessages = new List<Email>();
+        List<Email> messages = new List<Email>();
 
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             connection.Open();
 
-            // Get the user's last check time from the database
-            string getUserLastCheckTimeQuery = "SELECT last_check_time FROM Users_Last_Check_Time WHERE user_id = @UserID";
-            SqlCommand getUserLastCheckTimeCommand = new SqlCommand(getUserLastCheckTimeQuery, connection);
-            getUserLastCheckTimeCommand.Parameters.AddWithValue("@UserID", userId);
-            DateTime? lastCheckTime = (DateTime?)getUserLastCheckTimeCommand.ExecuteScalar();
+            // Get all messages for the user along with the sender's name
+            string getMessagesQuery = @"SELECT m.*, u.user_name AS sender_name
+                                    FROM Messages m
+                                    JOIN Users u ON m.sender_id = u.user_id
+                                    WHERE m.recipient_id = @UserID";
+            SqlCommand getMessagesCommand = new SqlCommand(getMessagesQuery, connection);
+            getMessagesCommand.Parameters.AddWithValue("@UserID", userId);
 
-            // Get new messages for the user since the last check time
-            string getNewMessagesQuery = "SELECT * FROM Messages WHERE recipient_id = @UserID AND send_time > @LastCheckTime";
-            SqlCommand getNewMessagesCommand = new SqlCommand(getNewMessagesQuery, connection);
-            getNewMessagesCommand.Parameters.AddWithValue("@UserID", userId);
-            getNewMessagesCommand.Parameters.AddWithValue("@LastCheckTime", lastCheckTime ?? DateTime.MinValue);
-
-            using (SqlDataReader reader = getNewMessagesCommand.ExecuteReader())
+            using (SqlDataReader reader = getMessagesCommand.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -70,6 +67,7 @@ public class EmailService
                     {
                         message_id = (int)reader["message_id"],
                         sender_id = (int)reader["sender_id"],
+                        sender_name = reader["sender_name"].ToString(), // Get the sender's name
                         recipient_id = (int)reader["recipient_id"],
                         subject = reader["subject"].ToString(),
                         body = reader["body"].ToString(),
@@ -77,22 +75,15 @@ public class EmailService
                         read_status = (bool)reader["read_status"]
                     };
 
-                    newMessages.Add(email);
+                    messages.Add(email);
                 }
             }
-
-            // Update the user's last check time in the database
-            string updateLastCheckTimeQuery = "UPDATE Users_Last_Check_Time SET last_check_time = @CurrentTime WHERE user_id = @UserID";
-            SqlCommand updateLastCheckTimeCommand = new SqlCommand(updateLastCheckTimeQuery, connection);
-            updateLastCheckTimeCommand.Parameters.AddWithValue("@UserID", userId);
-            updateLastCheckTimeCommand.Parameters.AddWithValue("@CurrentTime", DateTime.UtcNow);
-            updateLastCheckTimeCommand.ExecuteNonQuery();
         }
 
-        return newMessages;
+        return messages;
     }
 
-    
+
 
     public List<string> GetAllUsernames()
     {

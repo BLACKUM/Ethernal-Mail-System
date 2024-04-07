@@ -1,39 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
+
 namespace __Wpf__App
 {
     public partial class MainWindow : Window
     {
         private readonly EmailService _emailService;
         private const int UserId = 1; // Replace with the actual user ID
-
+        private Timer _checkMessagesTimer;
         public MainWindow()
         {
             InitializeComponent();
             string connectionString = "Data Source=notebook-server\\sqlexpress;Initial Catalog=DBForMail;User=ADMAIL;Password=Fgadu!i2u0120i93udasj!";
-           
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(5);
-            timer.Tick += Timer_Tick;
-            timer.Start();
 
             // Initialize the EmailService with the database connection string
             _emailService = new EmailService(connectionString);
 
             List<string> usernames = _emailService.GetAllUsernames();
 
-            UsernameCombobox.ItemsSource= usernames;
-            UsernameCombobox.SelectedIndex=0;
+            UsernameCombobox.ItemsSource = usernames;
+            UsernameCombobox.SelectedIndex = 0;
 
+            // Start a timer to check for new messages every 5 seconds
+            _checkMessagesTimer = new Timer(CheckNewMessages, null, TimeSpan.Zero, TimeSpan.FromSeconds(1.5));
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            UpdateDataGridWithNewMessages();
-        }
+        
 
         private void SendEmailButton_Click(object sender, RoutedEventArgs e)
         {
@@ -49,29 +44,26 @@ namespace __Wpf__App
             OutputTextBlock.Text += "Email sent successfully.\n";
         }
 
-        private void CheckNewEmailsButton_Click(object sender, RoutedEventArgs e)
+        private void CheckNewMessages(object state)
         {
-            List<Email> newMessages = _emailService.PollForNewMessages(UserId);
+            List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
 
             if (newMessages.Count > 0)
             {
-                OutputTextBlock.Text += $"Received {newMessages.Count} new emails:\n";
-                foreach (Email email in newMessages)
+                Dispatcher.Invoke(() =>
                 {
-                    OutputTextBlock.Text += $"From: {email.sender_id}, Subject: {email.subject}\n";
-                    OutputTextBlock.Text += $"{email.body}\n";
-                    OutputTextBlock.Text += $"Sent at: {email.send_time}\n\n";
-                }
-            }
-            else
-            {
-                OutputTextBlock.Text += "No new emails.\n";
+                    messageDataGrid.Items.Clear(); // Clear the existing items
+                    foreach (Email email in newMessages)
+                    {
+                        messageDataGrid.Items.Add(email); // Add the new messages
+                    }
+                });
             }
         }
 
         public void UpdateDataGridWithNewMessages()
         {
-            List<Email> newMessages = _emailService.PollForNewMessages(UserId);
+            List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
             //sender_id
             messageDataGrid.ItemsSource = newMessages;
         }
