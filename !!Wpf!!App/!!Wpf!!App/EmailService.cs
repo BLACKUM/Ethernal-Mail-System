@@ -126,4 +126,28 @@ public class EmailService
         }
         return usernames;
     }
+
+    public int GetUserIdByName(string userName)
+    {
+        int userId = 0;
+
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string query = "SELECT user_id FROM Users WHERE user_name = @UserName";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserName", userName);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    userId = (int)reader["user_id"];
+                }
+            }
+        }
+
+        return userId;
+    }
 }

@@ -19,20 +19,25 @@ namespace __Wpf__App.MailWindow
     /// </summary>
     public partial class SendMail : Window
     {
+        private readonly EmailService _emailService;
+
         public int userIdBack;
+
         public SendMail(int userId)
         {
             InitializeComponent();
             userIdBack = userId;
+            string connectionString = "Data Source=notebook-server\\sqlexpress;Initial Catalog=DBForMail;User=ADMAIL;Password=Fgadu!i2u0120i93udasj!";
+
+            _emailService = new EmailService(connectionString);
+            List<string> usernames = _emailService.GetAllUsernames();
+
+            UsernameCombobox.ItemsSource = usernames;
+            UsernameCombobox.SelectedIndex = 0;
         }
 
-        private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                this.DragMove();
-            }
-        }
+        
+
         private void Collapse_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -44,22 +49,47 @@ namespace __Wpf__App.MailWindow
                 System.Windows.Application.Current.Shutdown();
             }
         }
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
+            // Get the selected recipient name from the ComboBox
+            string recipientName = UsernameCombobox.SelectedItem.ToString();
 
+            // Find the recipient ID from the database using the recipient name
+            int recipientId = _emailService.GetUserIdByName(recipientName);
+
+            // Get the subject and body from the form
+            string subject = SubjectTextBox.Text;
+            string body = BodyTextBox.Text;
+
+            // Create a new Email object with the recipient ID, subject, and body
+            Email newEmail = new Email
+            {
+                sender_id = userIdBack,
+                recipient_id = recipientId,
+                subject = subject,
+                body = body
+            };
+
+            // Send the email
+            _emailService.SendMessage(newEmail);
+
+            // Display a success message
+            StatusLabel.Content = "Email sent successfully.";
         }
-        /*
-        private void BackTo_Click(object sender, RoutedEventArgs e)
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             var MainWindow = new MainWindow(userIdBack);
             MainWindow.Show();
             this.Close();
         }
-        */
+        private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

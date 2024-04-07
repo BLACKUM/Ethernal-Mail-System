@@ -15,7 +15,6 @@ namespace __Wpf__App
         DataBase database = new DataBase();
         public int userIdBack;
         private readonly EmailService _emailService;
-        private const int UserId = 1; // Replace with the actual user ID
         public MainWindow(int userId)
         {
             InitializeComponent();
@@ -31,7 +30,6 @@ namespace __Wpf__App
             UsernameCombobox.ItemsSource = usernames;
             UsernameCombobox.SelectedIndex = 0;
 
-            CheckNewMessages();
 
             DataBase db = new DataBase();
             userIdBack = userId;
@@ -51,7 +49,7 @@ namespace __Wpf__App
                         if (user_nameObj != DBNull.Value)
                         {
                             string user_name = user_nameObj.ToString();
-                            UsernameTextBox.Content = user_name;
+                            UsernameTextBox.Content = "Добро пожаловать, "+user_name;
                             db.closeConnection();
                             return;
                         }
@@ -88,7 +86,8 @@ namespace __Wpf__App
                     db.closeConnection();
                 }
             }
-
+            CheckNewMessages();
+            FetchAndPopulateMessages(userId);
         }
 
         private void EmailService_NewMessageReceived(object sender, EmailEventArgs e)
@@ -129,21 +128,25 @@ namespace __Wpf__App
 
         private void SendEmailButton_Click(object sender, RoutedEventArgs e)
         {
-            Email newEmail = new Email
-            {
-                sender_id = UserId,
-                recipient_id = 1, // Replace with the actual recipient ID
-                subject = "Test Email",
-                body = "This is a test email message."
-            };
 
-            _emailService.SendMessage(newEmail);
-            OutputTextBlock.Content += "Email sent successfully.\n";
+            var SendMail = new SendMail(userIdBack);
+            SendMail.Show();
+            this.Hide();
+            //Email newEmail = new Email
+            //{
+            //    sender_id = userIdBack,
+            //    recipient_id = 1, // Replace with the actual recipient ID
+            //    subject = "Test Email",
+            //    body = "This is a test email message."
+            //};
+
+            //_emailService.SendMessage(newEmail);
+            //OutputTextBlock.Content += "Email sent successfully.\n";
         }
 
         private void CheckNewMessages()
         {
-            List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
+            List<Email> newMessages = _emailService.GetAllMessagesForUser(userIdBack);
 
             if (newMessages.Count > 0)
             {
@@ -160,7 +163,7 @@ namespace __Wpf__App
 
         public void UpdateDataGridWithNewMessages()
         {
-            List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
+            List<Email> newMessages = _emailService.GetAllMessagesForUser(userIdBack);
             //sender_id
             messageDataGrid.ItemsSource = newMessages;
         }
@@ -183,13 +186,10 @@ namespace __Wpf__App
 
         private void OnMessageSelected(object sender, RoutedEventArgs e)
         {
-            List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
-            var ReadMessage = new ReadMessage(newMessages, userIdBack);
-            ReadMessage.Show();
-            this.Hide();
+            
             if (messageDataGrid.SelectedItem != null && messageDataGrid.SelectedItem is Email selectedEmail)
             {
-                var readMessage = new ReadMessage(selectedEmail);
+                var readMessage = new ReadMessage(selectedEmail, userIdBack);
                 readMessage.Show();
                 this.Hide();
             }
@@ -197,6 +197,20 @@ namespace __Wpf__App
 
 
         private void Reload_Click(object sender, RoutedEventArgs e)
+        {
+            CheckNewMessages();
+        }
+
+        private void FetchAndPopulateMessages(int userId)
+        {
+            List<Email> messages = _emailService.GetAllMessagesForUser(userId);
+            Dispatcher.Invoke(() =>
+            {
+                messageDataGrid.ItemsSource = messages;
+            });
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CheckNewMessages();
         }

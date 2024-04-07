@@ -20,20 +20,16 @@ namespace __Wpf__App.MailWindow
     public partial class ReadMessage : Window
     {
         public int userIdBack;
-        public ReadMessage(List<Email> newMessages, int userId)
+        
+        private Email _selectedEmail;
+
+        public ReadMessage(Email email, int userId)
         {
             InitializeComponent();
             userIdBack = userId;
-        }
-        private Email _selectedEmail;
-
-        public ReadMessage(Email email)
-        {
-            InitializeComponent();
             _selectedEmail = email;
             DisplayMessage();
         }
-
         private void DisplayMessage()
         {
             SenderLabel.Content = $"Отправитель: {_selectedEmail.sender_name}";

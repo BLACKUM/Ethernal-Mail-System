@@ -7,7 +7,7 @@
         Background="Transparent"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Corporate Email App" Height="650" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Cursor="Arrow">
+        Title="Corporate Email App" Height="650" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Cursor="Arrow" Loaded="Window_Loaded">
     <Window.Resources>
     </Window.Resources>
     <Border BorderBrush="{StaticResource Color2}" Background="{StaticResource Color1}" BorderThickness="3" CornerRadius="15" Height="650" VerticalAlignment="Top" Margin="0,0,0,0" Cursor="Arrow">
