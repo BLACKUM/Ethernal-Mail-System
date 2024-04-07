@@ -1,9 +1,11 @@
 ﻿using __Wpf__App.MailWindow;
+using __Wpf__App.Auth;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 
 namespace __Wpf__App
 {
@@ -29,8 +31,31 @@ namespace __Wpf__App
             // Start a timer to check for new messages every 5 seconds
             _checkMessagesTimer = new Timer(CheckNewMessages, null, TimeSpan.Zero, TimeSpan.FromSeconds(1.5));
         }
+        private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+        private void Collapse_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены, что хотите закрыть окно?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
 
-        
+        private void BackTo_Click(object sender, RoutedEventArgs e)
+        {
+            /*var Auth = new Auth();
+            Auth.Show();
+            this.Hide();*/ // why r u not working?
+        }
 
         private void SendEmailButton_Click(object sender, RoutedEventArgs e)
         {
@@ -43,7 +68,7 @@ namespace __Wpf__App
             };
 
             _emailService.SendMessage(newEmail);
-            OutputTextBlock.Text += "Email sent successfully.\n";
+            OutputTextBlock.Content += "Email sent successfully.\n";
         }
 
         private void CheckNewMessages(object state)
@@ -90,9 +115,10 @@ namespace __Wpf__App
         {
             List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
             var ReadMessage = new ReadMessage(newMessages);
-            ReadMessage.ShowDialog();
+            ReadMessage.Show();
             this.Hide();
         }
 
+        
     }
 }
