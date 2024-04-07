@@ -53,7 +53,7 @@ namespace __Wpf__App.Auth
                 System.Windows.Application.Current.Shutdown();
             }
         }
-        private async Task Enter_ClickAsync(object sender, RoutedEventArgs e)
+        private async void Enter_Click(object sender, RoutedEventArgs e)
         {
             var LoginUser = loginBox.Text;
             var PasswordUser = passBox.Password;
