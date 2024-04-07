@@ -19,7 +19,7 @@
             <Label x:Name="OutputTextBlock" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color2}"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" x:Name="Exit" Content="X" HorizontalAlignment="Left" Margin="945,4,0,0" VerticalAlignment="Top" Width="42" Height="26" BorderBrush="#FF1450A0" FontWeight="Bold" Cursor="Hand" Foreground="{StaticResource SeconColor1}" Click="Exit_Click" />
             <Button Style="{StaticResource MaterialDesignFlatButton}" x:Name="Collapse" Content="—" HorizontalAlignment="Left" Margin="900,4,0,0" VerticalAlignment="Top" Width="42" Height="26" BorderBrush="#FF1450A0" FontWeight="Bold" Cursor="Hand" Foreground="{StaticResource SeconColor1}" Click="Collapse_Click" />
-            <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="10,154,10,129" IsReadOnly="True">
+            <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="10,154,10,129" IsReadOnly="True" CanUserResizeColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Отправитель" Binding="{Binding sender_name}" Width="*"/>
                     <DataGridTextColumn Header="Тема" Binding="{Binding subject}" Width="*"/>
@@ -35,6 +35,7 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Button x:Name="Reload" Content="⟳" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="50" Height="50" BorderBrush="{StaticResource Color2}" Foreground="{StaticResource Color2}" Background="Transparent" FontWeight="Bold" Cursor="Hand"  FontSize="21" Click="Reload_Click" />
         </Grid>
     </Border>
 </Window>

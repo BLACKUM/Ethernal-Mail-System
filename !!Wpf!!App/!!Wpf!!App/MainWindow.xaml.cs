@@ -1,4 +1,5 @@
 ﻿using __Wpf__App.MailWindow;
+using __Wpf__App.Auth;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,7 +14,6 @@ namespace __Wpf__App
 
         private readonly EmailService _emailService;
         private const int UserId = 1; // Replace with the actual user ID
-        private Timer _checkMessagesTimer;
         public MainWindow()
         {
             InitializeComponent();
@@ -27,8 +27,7 @@ namespace __Wpf__App
             UsernameCombobox.ItemsSource = usernames;
             UsernameCombobox.SelectedIndex = 0;
 
-            // Start a timer to check for new messages every 5 seconds
-            _checkMessagesTimer = new Timer(CheckNewMessages, null, TimeSpan.Zero, TimeSpan.FromSeconds(1.5));
+            CheckNewMessages();
         }
         private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -68,7 +67,7 @@ namespace __Wpf__App
             OutputTextBlock.Content += "Email sent successfully.\n";
         }
 
-        private void CheckNewMessages(object state)
+        private void CheckNewMessages()
         {
             List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
 
@@ -116,6 +115,9 @@ namespace __Wpf__App
             this.Hide();
         }
 
-        
+        private void Reload_Click(object sender, RoutedEventArgs e)
+        {
+            CheckNewMessages();
+        }
     }
 }
