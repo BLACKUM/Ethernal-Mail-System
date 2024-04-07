@@ -13,8 +13,10 @@
     <Border BorderBrush="{StaticResource Color2}" Background="{StaticResource Color1}" BorderThickness="3" CornerRadius="15" Height="650" VerticalAlignment="Top" Margin="0,0,0,0" Cursor="Arrow">
         <Grid Margin="0,0,0,0">
             <Rectangle Cursor="SizeAll" MouseDown="Drag_MouseDown" Fill="Transparent" Stroke="Transparent" HorizontalAlignment="Left" Height="43" VerticalAlignment="Top" Width="895" Panel.ZIndex="1"/>
-            <TextBox materialDesign:HintAssist.Hint="Test" x:Name="TextBox" HorizontalAlignment="Center" Margin="0,50,680,0" VerticalAlignment="Top" Width="278" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
-            <TextBox materialDesign:HintAssist.Hint="Test" x:Name="TestBox" HorizontalAlignment="Center" Margin="0,100,680,0" VerticalAlignment="Top" Width="278" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
+            <Label materialDesign:HintAssist.Hint="Test" x:Name="SenderLabel" HorizontalAlignment="Center" Margin="0,50,680,0" VerticalAlignment="Top" Width="278" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
+            <Label materialDesign:HintAssist.Hint="Test" x:Name="SubjectLabel" HorizontalAlignment="Center" Margin="0,100,680,0" VerticalAlignment="Top" Width="278" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
+            <TextBox materialDesign:HintAssist.Hint="Test" x:Name="BodyTextBox" HorizontalAlignment="Center" Margin="0,150,680,0" VerticalAlignment="Top" Width="278" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
+            <Label materialDesign:HintAssist.Hint="Test" x:Name="DateLabel" HorizontalAlignment="Center" Margin="0,200,680,0" VerticalAlignment="Top" Width="278" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
             <Button x:Name="Enter" Content="Test" Margin="10,520,10,0" VerticalAlignment="Top" Height="38" Click="Test_Click" Style="{StaticResource ButtonStyle}"/>
             <Button x:Name="BackTo" Content="Вернуться" Margin="10,600,10,0" VerticalAlignment="Top" Height="38" Style="{StaticResource ButtonStyle}" Click="BackTo_Click" />
             <Label x:Name="Text" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color6}"/>

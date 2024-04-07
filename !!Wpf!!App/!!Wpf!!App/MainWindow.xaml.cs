@@ -1,4 +1,4 @@
-﻿using __Wpf__App.MailWindow;
+using __Wpf__App.MailWindow;
 using __Wpf__App.Auth;
 using System;
 using System.Collections.Generic;
@@ -172,7 +172,14 @@ namespace __Wpf__App
             var ReadMessage = new ReadMessage(newMessages, userIdBack);
             ReadMessage.Show();
             this.Hide();
+            if (messageDataGrid.SelectedItem != null && messageDataGrid.SelectedItem is Email selectedEmail)
+            {
+                var readMessage = new ReadMessage(selectedEmail);
+                readMessage.Show();
+                this.Hide();
+            }
         }
+
 
         private void Reload_Click(object sender, RoutedEventArgs e)
         {
