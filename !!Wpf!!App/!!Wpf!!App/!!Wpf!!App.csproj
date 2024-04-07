@@ -73,11 +73,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Auth\Auth.xaml">
+    <Page Include="Authorization\Auth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Auth\Reg.xaml">
+    <Page Include="Authorization\Reg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,7 +93,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="Auth\Reg.xaml.cs">
+    <Compile Include="Authorization\Reg.xaml.cs">
       <DependentUpon>Reg.xaml</DependentUpon>
     </Compile>
     <Compile Include="EmailService.cs" />
@@ -105,7 +105,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Auth\Auth.xaml.cs">
+    <Compile Include="Authorization\Auth.xaml.cs">
       <DependentUpon>Auth.xaml</DependentUpon>
     </Compile>
     <Compile Include="BaseWindow.cs" />
@@ -149,10 +149,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Auth\account_check_icon_135997.png" />
+    <Resource Include="Authorization\account_check_icon_135997.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Auth\cebb7d7cfc8d8acc8f4402c9e43246c1.png" />
+    <Resource Include="Authorization\cebb7d7cfc8d8acc8f4402c9e43246c1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,5 +1,4 @@
 ﻿using __Wpf__App.MailWindow;
-using __Wpf__App.Auth;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -52,9 +51,7 @@ namespace __Wpf__App
 
         private void BackTo_Click(object sender, RoutedEventArgs e)
         {
-            /*var Auth = new Auth();
-            Auth.Show();
-            this.Hide();*/ // why r u not working?
+
         }
 
         private void SendEmailButton_Click(object sender, RoutedEventArgs e)

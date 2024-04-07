@@ -16,16 +16,23 @@
             <Rectangle Cursor="SizeAll" MouseDown="Drag_MouseDown" Fill="Transparent" Stroke="Transparent" HorizontalAlignment="Left" Height="43" VerticalAlignment="Top" Width="895" Panel.ZIndex="1"/>
             <Button x:Name="SendEmailButton" Content="Send Email" Margin="10,520,10,0" VerticalAlignment="Top" Height="38" Click="SendEmailButton_Click" Style="{StaticResource ButtonStyle}"/>
             <Button x:Name="BackTo" Content="Выйти" Margin="10,600,10,0" VerticalAlignment="Top" Height="38" Style="{StaticResource ButtonStyle}" Click="BackTo_Click" />
-            <Label x:Name="OutputTextBlock" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color6}"/>
+            <Label x:Name="OutputTextBlock" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color2}"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" x:Name="Exit" Content="X" HorizontalAlignment="Left" Margin="945,4,0,0" VerticalAlignment="Top" Width="42" Height="26" BorderBrush="#FF1450A0" FontWeight="Bold" Cursor="Hand" Foreground="{StaticResource SeconColor1}" Click="Exit_Click" />
             <Button Style="{StaticResource MaterialDesignFlatButton}" x:Name="Collapse" Content="—" HorizontalAlignment="Left" Margin="900,4,0,0" VerticalAlignment="Top" Width="42" Height="26" BorderBrush="#FF1450A0" FontWeight="Bold" Cursor="Hand" Foreground="{StaticResource SeconColor1}" Click="Collapse_Click" />
-            <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="10,154,10,129" SelectionChanged="OnMessageSelected" IsReadOnly="True" >
+            <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="10,154,10,129" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Отправитель" Binding="{Binding sender_name}" Width="*"/>
                     <DataGridTextColumn Header="Тема" Binding="{Binding subject}" Width="*"/>
                     <DataGridTextColumn Header="Сообщение" Binding="{Binding body}" Width="*"/>
                     <DataGridTextColumn Header="Время отправки" Binding="{Binding send_time}" Width="*"/>
                     <DataGridTextColumn Header="Прочитано" Binding="{Binding read_status}" Width="*"/>
+                    <DataGridTemplateColumn x:Name="ReadColumn" Header="Прочитать" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="Read" Content="Прочитать" Height="auto" Click="OnMessageSelected" Style="{StaticResource ButtonStyle}"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
