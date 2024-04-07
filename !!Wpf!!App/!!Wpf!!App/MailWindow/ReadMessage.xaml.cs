@@ -24,6 +24,7 @@ namespace __Wpf__App.MailWindow
         {
             InitializeComponent();
             userIdBack = userId;
+        }
         private Email _selectedEmail;
 
         public ReadMessage(Email email)
