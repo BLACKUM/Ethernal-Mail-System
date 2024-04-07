@@ -18,7 +18,7 @@
         </StackPanel>
 
         <TextBlock x:Name="OutputTextBlock" Grid.Row="1" Margin="10" TextWrapping="Wrap" VerticalAlignment="Top" />
-        <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="0,67,0,0" Grid.Row="1">
+        <DataGrid x:Name="messageDataGrid" AutoGenerateColumns="False" Margin="0,67,0,0" Grid.Row="1" SelectionChanged="OnMessageSelected" IsReadOnly="True" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Отправитель" Binding="{Binding sender_name}" Width="*"/>
                 <DataGridTextColumn Header="Тема" Binding="{Binding subject}" Width="*"/>

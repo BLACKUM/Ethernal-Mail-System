@@ -1,4 +1,5 @@
-﻿using System;
+﻿using __Wpf__App.MailWindow;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading;
@@ -8,6 +9,7 @@ namespace __Wpf__App
 {
     public partial class MainWindow : Window
     {
+
         private readonly EmailService _emailService;
         private const int UserId = 1; // Replace with the actual user ID
         private Timer _checkMessagesTimer;
@@ -83,5 +85,14 @@ namespace __Wpf__App
             });
             }
         */
+
+        private void OnMessageSelected(object sender, RoutedEventArgs e)
+        {
+            List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
+            var ReadMessage = new ReadMessage(newMessages);
+            ReadMessage.ShowDialog();
+            this.Hide();
+        }
+
     }
 }
