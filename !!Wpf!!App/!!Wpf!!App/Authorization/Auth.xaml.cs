@@ -22,6 +22,7 @@ namespace __Wpf__App.Auth
     /// </summary>
     public partial class Auth : Window
     {
+        public int userIdBack;
         DataBase database = new DataBase();
         public Auth()
         {
@@ -78,6 +79,27 @@ namespace __Wpf__App.Auth
                     db.closeConnection();
                     return;
                 }
+                query = "SELECT user_id FROM Users WHERE user_name = @user_name AND user_password = @user_password";
+                command = new SqlCommand(query, db.getConnection());
+                command.Parameters.AddWithValue("@user_name", LoginUser);
+                command.Parameters.AddWithValue("@user_password", PasswordUser);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        int userId = reader.GetInt32(reader.GetOrdinal("user_id"));
+                        userIdBack = userId;
+                        var MainWindow = new MainWindow(userIdBack);
+                        MainWindow.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        string text = "Не верный логин или пароль.";
+                        Text.Content = text;
+                    }
+                }
             }
             catch (SqlException ex)
             {
@@ -92,9 +114,6 @@ namespace __Wpf__App.Auth
                 Mouse.OverrideCursor = null;
                 if (db.getConnection().State == ConnectionState.Open)
                 {
-                    var MainWindow = new MainWindow();
-                    MainWindow.Show();
-                    this.Hide();
                     db.closeConnection();
                 }
             }

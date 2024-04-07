@@ -19,9 +19,11 @@ namespace __Wpf__App.MailWindow
     /// </summary>
     public partial class SendMail : Window
     {
-        public SendMail()
+        public int userIdBack;
+        public SendMail(int userId)
         {
             InitializeComponent();
+            userIdBack = userId;
         }
 
         private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
@@ -51,5 +53,13 @@ namespace __Wpf__App.MailWindow
         {
 
         }
+        /*
+        private void BackTo_Click(object sender, RoutedEventArgs e)
+        {
+            var MainWindow = new MainWindow(userIdBack);
+            MainWindow.Show();
+            this.Close();
+        }
+        */
     }
 }

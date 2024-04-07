@@ -19,9 +19,11 @@ namespace __Wpf__App.MailWindow
     /// </summary>
     public partial class ReadMessage : Window
     {
-        public ReadMessage(List<Email> newMessages)
+        public int userIdBack;
+        public ReadMessage(List<Email> newMessages, int userId)
         {
             InitializeComponent();
+            userIdBack = userId;
         }
         private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -48,7 +50,7 @@ namespace __Wpf__App.MailWindow
 
         private void BackTo_Click(object sender, RoutedEventArgs e)
         {
-            var MainWindow = new MainWindow();
+            var MainWindow = new MainWindow(userIdBack);
             MainWindow.Show();
             this.Close();
         }

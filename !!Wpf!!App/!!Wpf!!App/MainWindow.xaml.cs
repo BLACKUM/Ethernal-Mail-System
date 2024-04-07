@@ -6,15 +6,17 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Data;
 
 namespace __Wpf__App
 {
     public partial class MainWindow : Window
     {
-
+        DataBase database = new DataBase();
+        public int userIdBack;
         private readonly EmailService _emailService;
         private const int UserId = 1; // Replace with the actual user ID
-        public MainWindow()
+        public MainWindow(int userId)
         {
             InitializeComponent();
             string connectionString = "Data Source=notebook-server\\sqlexpress;Initial Catalog=DBForMail;User=ADMAIL;Password=Fgadu!i2u0120i93udasj!";
@@ -28,6 +30,63 @@ namespace __Wpf__App
             UsernameCombobox.SelectedIndex = 0;
 
             CheckNewMessages();
+
+            DataBase db = new DataBase();
+            userIdBack = userId;
+            try
+            {
+                db.openConnection();
+                string query = "SELECT user_name FROM Users WHERE user_id = @user_id";
+                SqlCommand command = new SqlCommand(query, db.getConnection());
+                command = new SqlCommand(query, db.getConnection());
+                command.Parameters.AddWithValue("@user_id", userIdBack);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        object user_nameObj = reader["user_name"];
+                        if (user_nameObj != DBNull.Value)
+                        {
+                            string user_name = user_nameObj.ToString();
+                            UsernameTextBox.Content = user_name;
+                            db.closeConnection();
+                            return;
+                        }
+                        else
+                        {
+                            string text = "ОШИБКА";
+                            UsernameTextBox.Content = text;
+                            db.closeConnection();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        string text = "ОШИБКА";
+                        UsernameTextBox.Content = text;
+                        db.closeConnection();
+                        return;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Ошибка подключения к базе данных: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Произошла ошибка: " + ex.Message);
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+                if (db.getConnection().State == ConnectionState.Open)
+                {
+                    db.closeConnection();
+                }
+            }
+
         }
         private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -110,7 +169,7 @@ namespace __Wpf__App
         private void OnMessageSelected(object sender, RoutedEventArgs e)
         {
             List<Email> newMessages = _emailService.GetAllMessagesForUser(UserId);
-            var ReadMessage = new ReadMessage(newMessages);
+            var ReadMessage = new ReadMessage(newMessages, userIdBack);
             ReadMessage.Show();
             this.Hide();
         }
