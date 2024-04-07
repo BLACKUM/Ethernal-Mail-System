@@ -53,7 +53,7 @@ namespace __Wpf__App.Auth
                 System.Windows.Application.Current.Shutdown();
             }
         }
-        private void Enter_Click(object sender, RoutedEventArgs e)
+        private async Task Enter_ClickAsync(object sender, RoutedEventArgs e)
         {
             var LoginUser = loginBox.Text;
             var PasswordUser = passBox.Password;
@@ -67,7 +67,7 @@ namespace __Wpf__App.Auth
             Mouse.OverrideCursor = Cursors.Wait;
             try
             {
-                db.openConnection();
+                await db.openConnectionAsync();
                 string query = "SELECT COUNT(*) FROM Users WHERE user_name = @user_name";
                 SqlCommand command = new SqlCommand(query, db.getConnection());
                 command.Parameters.AddWithValue("@user_name", LoginUser);
