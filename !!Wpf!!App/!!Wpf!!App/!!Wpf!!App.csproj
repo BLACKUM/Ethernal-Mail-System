@@ -81,6 +81,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MailWindow\NotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MailWindow\ReadMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +114,9 @@
     </Compile>
     <Compile Include="BaseWindow.cs" />
     <Compile Include="DataBase.cs" />
+    <Compile Include="MailWindow\NotificationWindow.xaml.cs">
+      <DependentUpon>NotificationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MailWindow\ReadMessage.xaml.cs">
       <DependentUpon>ReadMessage.xaml</DependentUpon>
     </Compile>

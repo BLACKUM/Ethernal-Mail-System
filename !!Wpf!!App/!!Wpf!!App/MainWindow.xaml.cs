@@ -24,6 +24,8 @@ namespace __Wpf__App
             // Initialize the EmailService with the database connection string
             _emailService = new EmailService(connectionString);
 
+            _emailService.NewMessageReceived += EmailService_NewMessageReceived;
+
             List<string> usernames = _emailService.GetAllUsernames();
 
             UsernameCombobox.ItemsSource = usernames;
@@ -88,6 +90,19 @@ namespace __Wpf__App
             }
 
         }
+
+        private void EmailService_NewMessageReceived(object sender, EmailEventArgs e)
+        {
+            // Отображаем уведомление с информацией о новом сообщении
+            ShowNotification("Новое сообщение", $"Отправитель: {e.NewMessage.sender_name}\nТема: {e.NewMessage.subject}");
+        }
+
+        private void ShowNotification(string title, string message)
+        {
+            var notificationWindow = new NotificationWindow(title, message);
+            notificationWindow.ShowDialog();
+        }
+
         private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)

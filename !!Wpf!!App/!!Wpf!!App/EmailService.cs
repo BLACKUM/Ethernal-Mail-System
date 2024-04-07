@@ -14,9 +14,28 @@ public class Email
     public bool read_status { get; set; }
 }
 
+public class EmailEventArgs : EventArgs
+{
+    public Email NewMessage { get; }
+
+    public EmailEventArgs(Email newMessage)
+    {
+        NewMessage = newMessage;
+    }
+}
+
 public class EmailService
 {
+    public delegate void NewMessageReceivedEventHandler(object sender, EmailEventArgs e);
+
+    public event NewMessageReceivedEventHandler NewMessageReceived;
+
     private readonly string _connectionString;
+
+    private void OnNewMessageReceived(Email newMessage)
+    {
+        NewMessageReceived?.Invoke(this, new EmailEventArgs(newMessage));
+    }
 
     public EmailService(string connectionString)
     {
