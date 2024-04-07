@@ -31,22 +31,23 @@ namespace __Wpf__App.MailWindow
                 this.DragMove();
             }
         }
+        private void Collapse_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены, что хотите закрыть окно?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
         private void Test_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Collapse_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
         {
 
         }

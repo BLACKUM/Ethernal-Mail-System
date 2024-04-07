@@ -33,6 +33,23 @@ namespace __Wpf__App.Auth
                 this.DragMove();
             }
         }
+        private void Collapse_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            var authorization = new Auth();
+            authorization.Show();
+            this.Close();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены, что хотите закрыть окно?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
         private async void Reg_Click(object sender, RoutedEventArgs e)
         {
             string login = loginBox.Text;
@@ -83,23 +100,6 @@ namespace __Wpf__App.Auth
                 {
                     db.closeConnection();
                 }
-            }
-        }
-        private void Collapse_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            var authorization = new Auth();
-            authorization.Show();
-            this.Close();
-        }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Вы уверены, что хотите закрыть окно?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                System.Windows.Application.Current.Shutdown();
             }
         }
     }

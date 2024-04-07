@@ -45,6 +45,13 @@ namespace __Wpf__App.Auth
         {
             this.WindowState = WindowState.Minimized;
         }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены, что хотите закрыть окно?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
             var LoginUser = loginBox.Text;
@@ -97,14 +104,6 @@ namespace __Wpf__App.Auth
             var registration = new Reg();
             registration.Show();
             this.Hide();
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Вы уверены, что хотите закрыть окно?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                System.Windows.Application.Current.Shutdown();
-            }
         }
     }
 }
