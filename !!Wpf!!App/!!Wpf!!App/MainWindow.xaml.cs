@@ -132,16 +132,7 @@ namespace __Wpf__App
             var SendMail = new SendMail(userIdBack);
             SendMail.Show();
             this.Hide();
-            //Email newEmail = new Email
-            //{
-            //    sender_id = userIdBack,
-            //    recipient_id = 1, // Replace with the actual recipient ID
-            //    subject = "Test Email",
-            //    body = "This is a test email message."
-            //};
-
-            //_emailService.SendMessage(newEmail);
-            //OutputTextBlock.Content += "Email sent successfully.\n";
+            
         }
 
         private void CheckNewMessages()
@@ -152,10 +143,10 @@ namespace __Wpf__App
             {
                 Dispatcher.Invoke(() =>
                 {
-                    messageDataGrid.Items.Clear(); // Clear the existing items
+                    messageDataGrid.Items.Clear(); 
                     foreach (Email email in newMessages)
                     {
-                        messageDataGrid.Items.Add(email); // Add the new messages
+                        messageDataGrid.Items.Add(email); 
                     }
                 });
             }
@@ -164,25 +155,9 @@ namespace __Wpf__App
         public void UpdateDataGridWithNewMessages()
         {
             List<Email> newMessages = _emailService.GetAllMessagesForUser(userIdBack);
-            //sender_id
             messageDataGrid.ItemsSource = newMessages;
         }
-        /* 
-        private async Task LoadDataRaspisanie()
-        {
-            var КурсыIds = await dbEnt.Пользователи_Курсы.ToListAsync();
-            var расписание = await dbEnt.Расписание.ToListAsync();
-            var назвКурса = await dbEnt.Курсы.ToListAsync();
-            Dispatcher.Invoke(() =>
-            {
-            NameKursRaspisanie.ItemsSource = назвКурса;
-            NameKursRaspisanie.DisplayMemberPath = "Название";
-            NameKursRaspisanie.SelectedValuePath = "ID_Курса";
-            расписаниеDataGridRaspisanie.ItemsSource = расписание;
-            originalListRaspisanie = расписание;
-            });
-            }
-        */
+        
 
         private void OnMessageSelected(object sender, RoutedEventArgs e)
         {

@@ -32,7 +32,7 @@ public class EmailService
 
     private readonly string _connectionString;
 
-    private void OnNewMessageReceived(Email newMessage)
+    public void OnNewMessageReceived(Email newMessage)
     {
         NewMessageReceived?.Invoke(this, new EmailEventArgs(newMessage));
     }
@@ -102,7 +102,85 @@ public class EmailService
         return messages;
     }
 
+    public List<Email> GetNewMessagesForUser(int userId, DateTime lastCheckTime)
+    {
+        List<Email> messages = new List<Email>();
 
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            // Get all messages for the user since the last check time, along with the sender's name
+            string getMessagesQuery = @"SELECT m.*, u.user_name AS sender_name
+                                    FROM Messages m
+                                    JOIN Users u ON m.sender_id = u.user_id
+                                    WHERE m.recipient_id = @UserID AND m.send_time > @LastCheckTime";
+            SqlCommand getMessagesCommand = new SqlCommand(getMessagesQuery, connection);
+            getMessagesCommand.Parameters.AddWithValue("@UserID", userId);
+            getMessagesCommand.Parameters.AddWithValue("@LastCheckTime", lastCheckTime);
+
+            using (SqlDataReader reader = getMessagesCommand.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Email email = new Email
+                    {
+                        message_id = (int)reader["message_id"],
+                        sender_id = (int)reader["sender_id"],
+                        sender_name = reader["sender_name"].ToString(), // Get the sender's name
+                        recipient_id = (int)reader["recipient_id"],
+                        subject = reader["subject"].ToString(),
+                        body = reader["body"].ToString(),
+                        send_time = (DateTime)reader["send_time"],
+                        read_status = (bool)reader["read_status"]
+                    };
+
+                    messages.Add(email);
+                }
+            }
+        }
+
+        return messages;
+    }
+
+    public DateTime GetLastCheckTimeForUser(int userId)
+    {
+        DateTime lastCheckTime = DateTime.MinValue;
+
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string query = "SELECT last_check_time FROM Users_Last_Check_Time WHERE user_id = @UserId";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserId", userId);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    lastCheckTime = (DateTime)reader["last_check_time"];
+                }
+            }
+        }
+
+        return lastCheckTime;
+    }
+
+    public void UpdateLastCheckTimeForUser(int userId, DateTime lastCheckTime)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string updateQuery = "UPDATE Users_Last_Check_Time SET last_check_time = @LastCheckTime WHERE user_id = @UserId";
+            SqlCommand command = new SqlCommand(updateQuery, connection);
+            command.Parameters.AddWithValue("@LastCheckTime", lastCheckTime);
+            command.Parameters.AddWithValue("@UserId", userId);
+
+            command.ExecuteNonQuery();
+        }
+    }
 
     public List<string> GetAllUsernames()
     {
