@@ -23,5 +23,32 @@ namespace __Wpf__App.MailWindow
         {
             InitializeComponent();
         }
+
+        private void Drag_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Collapse_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
