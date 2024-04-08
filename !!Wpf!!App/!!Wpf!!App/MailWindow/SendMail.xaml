@@ -27,7 +27,7 @@
 
             <Button x:Name="BackButton" Content="Назад" Margin="10,600,10,0" VerticalAlignment="Top" Height="38" Style="{StaticResource ButtonStyle}" Click="BackButton_Click" />
 
-            <Label x:Name="StatusLabel" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color6}"/>
+            <Label x:Name="StatusLabel" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource SeconColor1}"/>
 
             <Button Style="{StaticResource MaterialDesignFlatButton}" x:Name="ExitButton" Content="X" HorizontalAlignment="Left" Margin="945,4,0,0" VerticalAlignment="Top" Width="42" Height="26" BorderBrush="#FF1450A0" FontWeight="Bold" Cursor="Hand" Foreground="{StaticResource SeconColor1}" Click="Exit_Click" />
 

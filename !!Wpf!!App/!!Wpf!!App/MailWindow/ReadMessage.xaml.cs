@@ -23,11 +23,18 @@ namespace __Wpf__App.MailWindow
         
         private Email _selectedEmail;
 
-        public ReadMessage(Email email, int userId)
+        private readonly EmailService _emailService;
+
+        public ReadMessage(Email email, int userId, EmailService emailService)
         {
             InitializeComponent();
             userIdBack = userId;
             _selectedEmail = email;
+            _emailService = emailService;
+
+            // Update the read status for the selected email
+            _emailService.UpdateReadStatus(_selectedEmail.message_id, true);
+
             DisplayMessage();
         }
         private void DisplayMessage()

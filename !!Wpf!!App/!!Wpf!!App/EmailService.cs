@@ -62,6 +62,21 @@ public class EmailService
         }
     }
 
+    public void UpdateReadStatus(int messageId, bool readStatus)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string updateQuery = "UPDATE Messages SET read_status = @ReadStatus WHERE message_id = @MessageID";
+            SqlCommand command = new SqlCommand(updateQuery, connection);
+            command.Parameters.AddWithValue("@ReadStatus", readStatus);
+            command.Parameters.AddWithValue("@MessageID", messageId);
+
+            command.ExecuteNonQuery();
+        }
+    }
+
     public List<Email> GetAllMessagesForUser(int userId)
     {
         List<Email> messages = new List<Email>();

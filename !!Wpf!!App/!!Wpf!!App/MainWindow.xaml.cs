@@ -26,17 +26,17 @@ namespace __Wpf__App
 
             DateTime currentTime = DateTime.Now;
             DateTime modifiedTime = currentTime.AddSeconds(-1);
-            _emailService.SetLastCheckTimeForUser(userId, modifiedTime);
+            //_emailService.SetLastCheckTimeForUser(userId, modifiedTime);
 
-            _emailService.NewMessageReceived += EmailService_NewMessageReceived;
+            //_emailService.NewMessageReceived += EmailService_NewMessageReceived;
 
             List<string> usernames = _emailService.GetAllUsernames();
 
             UsernameCombobox.ItemsSource = usernames;
             UsernameCombobox.SelectedIndex = 0;
 
-            _messageCheckerThread = new MessageCheckerThread(_emailService, userId, TimeSpan.FromSeconds(1));
-            _messageCheckerThread.Start();
+            //_messageCheckerThread = new MessageCheckerThread(_emailService, userId, TimeSpan.FromSeconds(1));
+            //_messageCheckerThread.Start();
 
             DataBase db = new DataBase();
             userIdBack = userId;
@@ -98,13 +98,14 @@ namespace __Wpf__App
             
         }
 
-        protected override void OnClosed(EventArgs e)
+        /*protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
 
             // Dispose of the MessageCheckerThread
             _messageCheckerThread.Dispose();
         }
+        */
 
         private void EmailService_NewMessageReceived(object sender, EmailEventArgs e)
         {
@@ -175,14 +176,13 @@ namespace __Wpf__App
             List<Email> newMessages = _emailService.GetAllMessagesForUser(userIdBack);
             messageDataGrid.ItemsSource = newMessages;
         }
-        
+
 
         private void OnMessageSelected(object sender, RoutedEventArgs e)
         {
-            
             if (messageDataGrid.SelectedItem != null && messageDataGrid.SelectedItem is Email selectedEmail)
             {
-                var readMessage = new ReadMessage(selectedEmail, userIdBack);
+                var readMessage = new ReadMessage(selectedEmail, userIdBack, _emailService);
                 readMessage.Show();
                 this.Hide();
             }
