@@ -139,7 +139,9 @@ namespace __Wpf__App
 
         private void BackTo_Click(object sender, RoutedEventArgs e)
         {
-
+            var Auth = new Auth.Auth();
+            Auth.Show();
+            this.Close();
         }
 
         private void SendEmailButton_Click(object sender, RoutedEventArgs e)

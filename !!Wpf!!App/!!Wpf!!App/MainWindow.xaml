@@ -15,7 +15,7 @@
             <Label x:Name="UsernameTextBox" Content="" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color2}"/>
             <ComboBox x:Name="UsernameCombobox" Margin="79,109,897,505" HorizontalAlignment="Center" Height="30" Background="{StaticResource Color2}" RenderTransformOrigin="0.167,1.1"/>
             <Rectangle Cursor="SizeAll" MouseDown="Drag_MouseDown" Fill="Transparent" Stroke="Transparent" HorizontalAlignment="Left" Height="43" VerticalAlignment="Top" Width="895" Panel.ZIndex="1"/>
-            <Button x:Name="SendEmailButton" Content="Send Email" Margin="10,520,10,0" VerticalAlignment="Top" Height="38" Click="SendEmailButton_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="SendEmailButton" Content="Отправить сообщение" Margin="10,520,10,0" VerticalAlignment="Top" Height="38" Click="SendEmailButton_Click" Style="{StaticResource ButtonStyle}"/>
             <Button x:Name="BackTo" Content="Выйти" Margin="10,600,10,0" VerticalAlignment="Top" Height="38" Style="{StaticResource ButtonStyle}" Click="BackTo_Click" />
             <Label x:Name="OutputTextBlock" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color2}"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" x:Name="Exit" Content="X" HorizontalAlignment="Left" Margin="945,4,0,0" VerticalAlignment="Top" Width="42" Height="26" BorderBrush="#FF1450A0" FontWeight="Bold" Cursor="Hand" Foreground="{StaticResource SeconColor1}" Click="Exit_Click" />

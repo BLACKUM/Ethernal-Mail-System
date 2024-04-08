@@ -56,10 +56,6 @@ namespace __Wpf__App.MailWindow
                 System.Windows.Application.Current.Shutdown();
             }
         }
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void BackTo_Click(object sender, RoutedEventArgs e)
         {

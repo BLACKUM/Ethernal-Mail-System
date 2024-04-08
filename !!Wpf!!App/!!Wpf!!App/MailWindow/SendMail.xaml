@@ -15,17 +15,17 @@
             <Rectangle Cursor="SizeAll" MouseDown="Drag_MouseDown" Fill="Transparent" Stroke="Transparent" HorizontalAlignment="Left" Height="43" VerticalAlignment="Top" Width="895" Panel.ZIndex="1"/>
             <ComboBox x:Name="UsernameCombobox" HorizontalAlignment="Left" Height="30" Background="{StaticResource Color2}" RenderTransformOrigin="0.167,1.1" Width="47" Margin="150,52,0,0" VerticalAlignment="Top"/>
 
-            <Label Content="To:" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
+            <Label Content="Получатель:" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
 
-            <Label Content="Subject:" HorizontalAlignment="Left" Margin="50,100,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
+            <Label Content="Тема:" HorizontalAlignment="Left" Margin="50,100,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
             <TextBox x:Name="SubjectTextBox" Margin="150,100,150,0" Height="30" VerticalAlignment="Top" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
 
-            <Label Content="Message:" HorizontalAlignment="Left" Margin="50,150,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
+            <Label Content="Сообщение:" HorizontalAlignment="Left" Margin="50,150,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
             <TextBox x:Name="BodyTextBox" Margin="150,165,150,185" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Foreground="{StaticResource Color3}" BorderBrush="{StaticResource Color3}" FontSize="16"/>
 
-            <Button x:Name="SendButton" Content="Send" Margin="10,520,10,0" VerticalAlignment="Top" Height="38" Click="Send_Click" Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="SendButton" Content="Отправить" Margin="10,520,10,0" VerticalAlignment="Top" Height="38" Click="Send_Click" Style="{StaticResource ButtonStyle}"/>
 
-            <Button x:Name="BackButton" Content="Back" Margin="10,600,10,0" VerticalAlignment="Top" Height="38" Style="{StaticResource ButtonStyle}" Click="BackButton_Click" />
+            <Button x:Name="BackButton" Content="Назад" Margin="10,600,10,0" VerticalAlignment="Top" Height="38" Style="{StaticResource ButtonStyle}" Click="BackButton_Click" />
 
             <Label x:Name="StatusLabel" Content="" HorizontalAlignment="Center" Margin="0,570,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color6}"/>
 
